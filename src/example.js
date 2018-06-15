@@ -4,7 +4,6 @@ const {WW} = require('./index');
 
 function AppInit(config) {
   return WW({
-
     getFoo: {
       create() {
         return {}
@@ -15,10 +14,17 @@ function AppInit(config) {
       }
     },
 
-    async getBar() {
-      const foo = await this.getFoo();
-      return {foo};
-    }
+    getBar: {
+      create() {
+        return {};
+      },
+
+      async wire(bar) {
+        bar["foo"] = await this.getFoo();
+      }
+    },
+
+
   });
 }
 
